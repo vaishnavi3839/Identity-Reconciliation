@@ -49,10 +49,15 @@ Example Live Response
 Tech Stack Used-
 
 Node.js
+
 Express
+
 TypeScript
+
 PostgreSQL (Neon Cloud)
+
 Prisma ORM
+
 Render (Deployment)
 
 I used PostgreSQL because it handles relational data well and Prisma makes database operations easier and cleaner.
@@ -60,30 +65,51 @@ I used PostgreSQL because it handles relational data well and Prisma makes datab
 Problem Understanding
 
 Customers can place orders using:
+
 Same email
+
 Same phone number
+
 Different email but same phone
+
 Different phone but same email
+
 Because of this, multiple rows in the database can belong to the same person.
 
 We need to:
+
 Find related contacts using email or phone
+
 Link them together
+
 Keep the oldest contact as primary
+
 Mark others as secondary
+
 Return consolidated contact details
 
 How It Works
+
 If no existing contact is found:
+
 A new contact is created
+
 It is marked as "primary"
+
 If matching contact exists:
+
 All related contacts are fetched
+
 The oldest one is selected as primary
+
 If multiple primaries exist, the older one stays primary
+
 Other primaries are converted to secondary
+
 If a new email or phone is provided:
+
 A new secondary contact is created
+
 It is linked to the primary contact
 
 API Endpoint
@@ -129,13 +155,22 @@ Database Schema
 
 The Contact table contains:
 
+
 id
+
 email
+
 phoneNumber
+
 linkedId
+
 linkPrecedence (primary / secondary)
+
+
 createdAt
+
 updatedAt
+
 deletedAt
 
 The oldest contact (based on createdAt) is always treated as primary.
@@ -171,17 +206,27 @@ http://localhost:3000
 
 
 Assumptions Made
+
 At least one of email or phoneNumber will always be provided.
+
 Contacts are linked if either email or phone matches.
+
 The oldest contact becomes primary.
+
 Soft delete (deletedAt) is not handled in this version.
 
 Possible Improvements
+
 If I had more time, I would:
+
 Add proper input validation
+
 Add unit test cases
+
 Use database transactions for safer updates
+
 Add logging
+
 Add Docker support
 
 Repository Link
