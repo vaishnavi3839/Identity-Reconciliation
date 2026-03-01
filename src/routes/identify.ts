@@ -1,9 +1,9 @@
-import { Router } from "express"
+import { Router, Request, Response } from "express"
 import { identifyContact } from "../services/contactService"
 
 const router = Router()
 
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
   try {
     const { email, phoneNumber } = req.body
 
